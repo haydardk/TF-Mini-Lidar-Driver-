@@ -1,5 +1,10 @@
 #define LIDAR_BAUD 115200
 #define HARD_UART_INST uart2 
+#define BAUD_RATE 115200
+#define DATA_BITS 8
+#define STOP_BITS 1
+#define PARITY    UART_PARITY_NONE
+
 #define LIDAR_TX_PIN 2
 #define LIDAR_RX_PIN 3  // AYARLANACAK
 
@@ -21,6 +26,7 @@ automatically switchable by default*/
 void lidar_configurate(distancemode_t distmode);
 void lidar_process(uint8_t* buffer);
 void lidar_rt_uart_setup(void);
+void lidar_rt_uart_get(void);
 
 
 void lidar_uart_setup(void);

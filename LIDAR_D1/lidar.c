@@ -17,6 +17,19 @@ void lidar_rt_uart_setup(){
     uart_init(HARD_UART_INST, LIDAR_BAUD);
     gpio_set_function(LIDAR_TX_PIN, GPIO_FUNC_UART);
     gpio_set_function(LIDAR_RX_PIN, GPIO_FUNC_UART);
+    uart_set_format(HARD_UART_INST, DATA_BITS, STOP_BITS, PARITY);
+    uart_set_hw_flow(HARD_UART_INST, false, false);
+    uart_set_fifo_enabled(HARD_UART_INST, false);
+}
+void lidar_rt_uart_get(){
+    int i;
+    uart_read_bytes(HARD_UART_INST, lidar_buffer, 1, 10); 
+    if (lidar_buffer[0]==0x59){
+        for (i=1;i<9;i++){
+            lidar_buffer[i] = uart_getc(HARD_UART_INST);
+        }
+    }
+    /* */
 }
 void lidar_configurate(distancemode_t distmode ){
     /* Herhangi bir platform ile (STM32 ya da Pico) aşağıdaki mesajlar HEX kodu olarak UART 115200 baud rate ile lidara gönderilmeli 
